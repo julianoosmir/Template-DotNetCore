@@ -6,7 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Template.Application.AutoMapper;
 using Template.Data.Context;
+using Template.IoC;
+using Template.Swagger;
 
 namespace Templete
 {
@@ -26,6 +29,11 @@ namespace Templete
 
             services.AddDbContext<TemplateContext>(op=> op.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
 
+            services.AddAutoMapper(typeof(AutoMapperSetup));
+
+            services.AddSwaggerConfiguration();
+
+            NativeInjector.RegisterServices(services);
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -46,6 +54,9 @@ namespace Templete
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+
+            app.UseSwaggerConfiguration();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

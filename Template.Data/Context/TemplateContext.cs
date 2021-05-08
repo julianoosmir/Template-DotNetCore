@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Template.Data.Extensions;
 using Template.Data.Mapping;
 using Template.Domain.Entities;
 
@@ -20,6 +21,8 @@ namespace Template.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserMap());
+            modelBuilder.ApplyGlobalConfigurations();
+
             base.OnModelCreating(modelBuilder);
         }
     }

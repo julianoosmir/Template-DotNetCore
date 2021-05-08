@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CA1716: Identificadores não devem corresponder a palavras-chave
+dotnet_diagnostic.CA1716.severity = none
