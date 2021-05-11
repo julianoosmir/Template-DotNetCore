@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using Template.Application.ViewModels;
 namespace Templete.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService userService;
@@ -29,6 +30,29 @@ namespace Templete.Controllers
         {
 
             return Ok(this.userService.Post(userViewModel));
+        }
+        [HttpGet("{id}")]
+        public IActionResult GetById(string id)
+        {
+
+            return Ok(this.userService.GetById(id));
+        }
+        [HttpPut]
+        public IActionResult Put(UserViewModel userViewModel)
+        {
+            return Ok(this.userService.Put(userViewModel));
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(string id)
+        {
+
+            return Ok(this.userService.Delete(id));
+        }
+        [HttpPost("Authenticate"), AllowAnonymous]
+        public IActionResult Authenticate(UserAuthenticateRequestViewModel userViewModel)
+        {
+
+            return Ok(this.userService.Authenticate(userViewModel));
         }
     }
 }
